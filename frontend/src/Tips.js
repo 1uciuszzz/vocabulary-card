@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export default function Tips({ count }) {
   return (
@@ -14,3 +15,11 @@ export default function Tips({ count }) {
     </div>
   );
 }
+
+Tips.defaultProps = {
+  count: 0,
+};
+
+Tips.propTypes = {
+  count: PropTypes.number,
+};

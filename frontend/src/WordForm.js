@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import PropTypes from "prop-types";
 import { add_word } from "./http";
 
 const WordForm = ({ notify, dispatch }) => {
@@ -17,8 +17,14 @@ const WordForm = ({ notify, dispatch }) => {
             meaning,
             sentence,
             add_from,
-          }).then((r) => dispatch({ type: "create", word: r.data }));
-          notify("add successful");
+          })
+            .then((r) => {
+              dispatch({ type: "create", word: r.data });
+              notify("又碰到不会的了...");
+            })
+            .catch(() => {
+              notify("出错了😅");
+            });
           setSpell("");
           setMeaning("");
           setSentence("");
@@ -73,12 +79,17 @@ const WordForm = ({ notify, dispatch }) => {
       <label className="mx-auto w-6/12">
         <input
           type={"submit"}
-          value={"Add"}
-          className="w-full text-red-900 bg-blue-300 rounded-md border-2 border-green-400 shadow-md hover:cursor-pointer"
+          value={"➕"}
+          className="w-full bg-gradient-to-r from-green-300 hover:from-red-300 to-red-300 hover:to-green-300 rounded-md border-2 border-orange-300 shadow-md hover:cursor-pointer"
         />
       </label>
     </form>
   );
+};
+
+WordForm.propTypes = {
+  notify: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 
 export default WordForm;
