@@ -9,6 +9,9 @@ import WordCard from "./WordCard";
 import Tips from "./Tips";
 import About from "./About";
 import { get_words } from "./http";
+import Card from "./components/Card";
+import CardItemSerif from "./components/CardItemSerif";
+import CardItem from "./components/CardItem";
 export default function App() {
   const [state, dispatch] = useReducer(reducer, { words: [] });
   const [index, setIndex] = useState(0);
@@ -23,7 +26,7 @@ export default function App() {
       <div className="box-border flex flex-wrap gap-10 p-10 w-screen h-screen text-lg text-blue-400 bg-gradient-to-br from-slate-300 to-orange-200">
         <div className="flex flex-col flex-1 gap-10">
           <WordForm notify={notify} dispatch={dispatch} />
-          <div className="flex flex-wrap gap-10 h-3/6">
+          <div className="flex gap-10 h-3/6">
             <Tips count={state.words.length} />
             <About />
           </div>
@@ -39,7 +42,13 @@ export default function App() {
               key={state.words[index].id}
               word={state.words[index]}
             />
-          ) : null}
+          ) : (
+            <Card>
+              <CardItem>
+                <CardItemSerif text="这里一个单词都没有🚀" />
+              </CardItem>
+            </Card>
+          )}
         </div>
       </div>
       <ToastContainer />

@@ -1,11 +1,12 @@
 import React from "react";
 import { FaGithub, FaCalendarAlt } from "react-icons/fa";
+import Card from "./components/Card";
 
 export default function About() {
   return (
-    <div className="flex-1 p-6 bg-gradient-to-tr from-amber-200 to-lime-200 rounded-md shadow-md">
+    <Card classNameCustom="flex-1">
       <p>About</p>
-      <p className="text-black">
+      <p className="font-serif text-black">
         Author:
         <br />
         <a
@@ -17,12 +18,12 @@ export default function About() {
           @1uciuszzz
         </a>
       </p>
-      <p className="text-black">
+      <p className="font-serif text-black">
         Finish Date:
         <br />
         <FaCalendarAlt size={28} className="inline pr-2" />
-        2022/4/12
+        2022/4/13
       </p>
-    </div>
+    </Card>
   );
 }

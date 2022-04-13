@@ -1,18 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Card from "./components/Card";
 
 export default function Tips({ count }) {
   return (
-    <div className="flex-1 p-6 text-slate-800 bg-gradient-to-br from-orange-200 to-purple-200 rounded-md shadow-md">
+    <Card classNameCustom="flex-1">
       <p>Tips</p>
-      <p className="text-red-700">
+      <p className="font-serif text-red-700">
         {count > 1
           ? `There are ${count} words.`
           : count === 0
           ? `There is no word`
           : `There is a word.`}
       </p>
-    </div>
+    </Card>
   );
 }
 

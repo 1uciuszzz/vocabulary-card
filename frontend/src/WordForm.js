@@ -1,89 +1,92 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { FaPlusCircle } from "react-icons/fa";
 import { add_word } from "./http";
+import Card from "./components/Card";
+import InputLabel from "./components/InputLabel";
+import Button from "./components/Button";
 
 const WordForm = ({ notify, dispatch }) => {
   const [spell, setSpell] = useState("");
   const [meaning, setMeaning] = useState("");
   const [sentence, setSentence] = useState("");
   const [add_from, setAddFrom] = useState("");
+  const handleSpell = (e) => {
+    setSpell(e.target.value);
+  };
+  const handleMeaning = (e) => {
+    setMeaning(e.target.value);
+  };
+  const handleSentence = (e) => {
+    setSentence(e.target.value);
+  };
+  const handleAddFrom = (e) => {
+    setAddFrom(e.target.value);
+  };
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        try {
-          add_word({
-            spell,
-            meaning,
-            sentence,
-            add_from,
-          })
-            .then((r) => {
-              dispatch({ type: "create", word: r.data });
-              notify("又碰到不会的了...");
+    <Card>
+      <form
+        className="box-border flex flex-col justify-evenly h-full "
+        onSubmit={(e) => {
+          e.preventDefault();
+          try {
+            add_word({
+              spell,
+              meaning,
+              sentence,
+              add_from,
             })
-            .catch(() => {
-              notify("出错了😅");
-            });
-          setSpell("");
-          setMeaning("");
-          setSentence("");
-          setAddFrom("");
-        } catch (e) {
-          console.log("please check the spell field");
-        }
-      }}
-      className="box-border flex flex-col justify-evenly px-6 h-3/6 bg-gradient-to-br from-white to-slate-200 rounded-lg shadow-md"
-    >
-      <h2 className="text-center text-green-500">Add new word</h2>
-      <label htmlFor="spell" className="flex">
-        <span>spell:</span>
-        <input
-          id="spell"
+              .then((r) => {
+                dispatch({ type: "create", word: r.data });
+                notify("又碰到不会的了...");
+              })
+              .catch(() => {
+                notify("出错了😅");
+              });
+            setSpell("");
+            setMeaning("");
+            setSentence("");
+            setAddFrom("");
+          } catch (e) {
+            notify("你起码填个拼写吧😅");
+          }
+        }}
+      >
+        <h2 className="text-center text-green-500">Add new word</h2>
+        <InputLabel
+          htmlFor="spell"
+          handleChange={handleSpell}
+          title="spell"
+          type="text"
           value={spell}
-          onChange={(e) => setSpell(e.target.value)}
-          type={"text"}
-          className="flex-1 text-center bg-red-100 rounded-md border-b-2 focus:border-b-red-900 focus:outline-none"
         />
-      </label>
-      <label htmlFor="meaning" className="flex">
-        <span>meaning:</span>
-        <input
-          id="meaning"
+        <InputLabel
+          htmlFor="meaning"
+          handleChange={handleMeaning}
+          title="meaning"
+          type="text"
           value={meaning}
-          onChange={(e) => setMeaning(e.target.value)}
-          type={"text"}
-          className="flex-1 text-center bg-red-100 rounded-md border-b-2 focus:border-b-red-900 focus:outline-none"
         />
-      </label>
-      <label htmlFor="sentence" className="flex">
-        <span>sentence:</span>
-        <input
-          id="sentence"
+        <InputLabel
+          htmlFor="sentence"
+          handleChange={handleSentence}
+          title="sentence"
+          type="text"
           value={sentence}
-          onChange={(e) => setSentence(e.target.value)}
-          type={"text"}
-          className="flex-1 text-center bg-red-100 rounded-md border-b-2 focus:border-b-red-900 focus:outline-none"
         />
-      </label>
-      <label htmlFor="add_from" className="flex">
-        <span>add from:</span>
-        <input
-          id="add_from"
+        <InputLabel
+          htmlFor="add_from"
+          handleChange={handleAddFrom}
+          title="add from"
+          type="text"
           value={add_from}
-          onChange={(e) => setAddFrom(e.target.value)}
-          type={"text"}
-          className="flex-1 text-center bg-red-100 rounded-md border-b-2 focus:border-b-red-900 focus:outline-none"
         />
-      </label>
-      <label className="mx-auto w-6/12">
-        <input
-          type={"submit"}
-          value={"➕"}
-          className="w-full bg-gradient-to-r from-green-300 hover:from-red-300 to-red-300 hover:to-green-300 rounded-md border-2 border-orange-300 shadow-md hover:cursor-pointer"
-        />
-      </label>
-    </form>
+        <Button type="submit">
+          <FaPlusCircle size={28} className="mx-auto" />
+        </Button>
+      </form>
+    </Card>
   );
 };
 
