@@ -39,9 +39,3 @@ npm install
 npm start
 // open browser and link to http://127.0.0.1:1234
 ```
-
-## usage
-
-double click on vocabulary card exchange to next vocabulary
-
-...

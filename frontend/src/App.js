@@ -1,57 +1,68 @@
-import React, { useReducer, useState } from "react";
-import useDeepCompareEffect from "use-deep-compare-effect";
+import React, { useReducer, useEffect, createContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Paper, Stack, Container, Badge } from "@mui/material";
 
-import reducer from "./reducer";
-import WordForm from "./WordForm";
-import WordCard from "./WordCard";
-import Tips from "./Tips";
-import About from "./About";
-import { get_words } from "./http";
-import Card from "./components/Card";
-import CardItemSerif from "./components/CardItemSerif";
-import CardItem from "./components/CardItem";
+import reducer from "./utils/reducer";
+import { get_words } from "./utils/api";
+import SideMenu from "./components/SideMenu";
+import MainContent from "./components/MainContent";
+
+export const MUWContext = createContext();
+const initState = {
+  words: [],
+  loading: true,
+  currIndex: 0,
+  currCardStatus: true,
+};
+
 export default function App() {
-  const [state, dispatch] = useReducer(reducer, { words: [] });
-  const [index, setIndex] = useState(0);
-  const notify = (msg) => {
-    toast(msg);
-  };
-  useDeepCompareEffect(() => {
-    get_words().then((o) => dispatch({ type: "get", words: o.data }));
-  }, [state.words]);
+  const [state, dispatch] = useReducer(reducer, initState);
+  useEffect(() => {
+    (async () => {
+      const { data } = await get_words();
+      dispatch({ type: "get", words: data });
+      dispatch({ type: "loaded" });
+    })();
+  }, []);
   return (
-    <>
-      <div className="box-border flex flex-wrap gap-10 p-10 w-screen h-screen text-lg text-blue-400 bg-gradient-to-br from-slate-300 to-orange-200">
-        <div className="flex flex-col flex-1 gap-10">
-          <WordForm notify={notify} dispatch={dispatch} />
-          <div className="flex gap-10 h-3/6">
-            <Tips count={state.words.length} />
-            <About />
-          </div>
-        </div>
-        <div className="flex-1">
-          {state.words.length ? (
-            <WordCard
-              count={state.words.length}
-              index={index}
-              next={setIndex}
-              notify={notify}
-              dispatch={dispatch}
-              key={state.words[index].id}
-              word={state.words[index]}
-            />
-          ) : (
-            <Card>
-              <CardItem>
-                <CardItemSerif text="这里一个单词都没有🚀" />
-              </CardItem>
-            </Card>
-          )}
-        </div>
-      </div>
+    <MUWContext.Provider
+      value={{
+        state,
+        dispatch,
+        toast,
+      }}
+    >
+      <Container
+        style={{
+          height: "100vh",
+        }}
+      >
+        <Stack
+          style={{
+            alignItems: "center",
+            height: "100%",
+            justifyContent: "space-between",
+            gap: "50px",
+          }}
+          direction={"row"}
+        >
+          <Paper>
+            <Badge badgeContent={state.words.length} color={"primary"}>
+              <SideMenu />
+            </Badge>
+          </Paper>
+          <Paper
+            style={{
+              flex: "1",
+            }}
+          >
+            <MainContent />
+          </Paper>
+        </Stack>
+      </Container>
+
       <ToastContainer />
-    </>
+    </MUWContext.Provider>
   );
 }
