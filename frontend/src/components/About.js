@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Link, Stack } from "@mui/material";
-import { Typography } from "@mui/material";
+import { Box, Link, Stack, Typography } from "@mui/material";
 
 export default function About() {
   return (
