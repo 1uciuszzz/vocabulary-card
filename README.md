@@ -2,6 +2,8 @@
 
 ## backend
 
+backend api address: [https://qn6vp9.deta.dev/docs](https://qn6vp9.deta.dev/docs)
+
 - python 3.8
 - fastapi
 - postgresql
@@ -10,32 +12,14 @@
 
 ## frontend
 
-- react 18
+- typescript
+- react
+- react-router-dom
 - tailwindcss
+- material ui
 - react-toastify
 - axios
 
 ## about
 
 a local application for learning vocabulary.
-
-## environment you needed
-
-make sure you had installed `python 3.8` and `nodejs`, because we should install dependencies by `pip` and `npm`
-
-```shell
-pip install pipenv
-git clone https://github.com/1uciuszzz/vocabulary-card.git
-cd vocabulary-card/backend
-pipenv install
-pipenv run server.py
-// -----
-// db configuration
-// open backend/db.py and change USER,PASSWORD,HOST,PORT and DBNAME
-// -----
-// open another terminal...
-cd ../frontend
-npm install
-npm start
-// open browser and link to http://127.0.0.1:1234
-```
