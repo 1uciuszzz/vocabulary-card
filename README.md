@@ -22,4 +22,4 @@ backend api address: [https://qn6vp9.deta.dev/docs](https://qn6vp9.deta.dev/docs
 
 ## about
 
-a local application for learning vocabulary.
+an application for learning vocabulary.
