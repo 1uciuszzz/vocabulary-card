@@ -2,8 +2,6 @@
 
 ## backend
 
-backend api address: [https://qn6vp9.deta.dev/docs](https://qn6vp9.deta.dev/docs)
-
 - python 3.8
 - fastapi
 - postgresql
